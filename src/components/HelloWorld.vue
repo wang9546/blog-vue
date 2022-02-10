@@ -1,40 +1,26 @@
 <template>
-  <img
-    alt="Vue logo"
-    src="../assets/logo.png"
-  />
-  <h1>{{ msg }}</h1>
-  <!-- <button @click="inCrement"> count is: </button> -->
-  <el-button
-    icon="el-icon-success"
-    type="primary"
-    @click="inCrement"
-  >count is: {{ count }}</el-button>
-  <p>{{ count }}</p>
+  <div class="hello">
+    <h1>{{ msg }}</h1>
+    <h2>Essential Links</h2>
+    <el-button>按钮</el-button>
+  </div>
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue'
-import { useStore } from 'vuex'
-import { key } from '../store'
+  import site from '@/api/site'
 
-export default defineComponent({
-  name: 'HelloWorld',
-  props: {
-    msg: {
-      type: String,
-      default: 'Hello Vue 3 + TypeScript + Vite'
+  export default {
+    name: 'HelloWorld',
+    data() {
+      return {
+        msg: ''
+      }
+    },
+    created() {
+      site.getSite().then(responese => {
+        this.msg = responese.code;
+      });
     }
-  },
-  setup() {
-    const store = useStore(key)
 
-    const count = computed(() => store.state.count)
-
-    return {
-      count,
-      inCrement: () => store.commit('increment')
-    }
   }
-})
 </script>
